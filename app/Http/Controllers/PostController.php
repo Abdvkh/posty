@@ -11,7 +11,7 @@ class PostController extends Controller
     public function index()
     {
 //        $posts = Post::get();// all[Laravel collection]
-        $posts = Post::paginate(20);// paginated[LengthAwarePaginator[Lar.Collection]]
+        $posts = Post::latest()->with(['user', 'likes'])->paginate(20);// paginated[LengthAwarePaginator[Lar.Collection]]
 
         return view('posts.index', [
             'posts' => $posts
@@ -25,6 +25,16 @@ class PostController extends Controller
         ]);
 
         auth()->user()->posts()->create($request->only('body'));
+
+        return back();
+    }
+
+    public function destroy(Post $post)
+    {
+        if (!$post->ownedBy(auth()->user())) {
+
+        }
+        $post->delete();
 
         return back();
     }
