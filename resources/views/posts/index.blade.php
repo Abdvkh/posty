@@ -33,15 +33,14 @@
                         <span class="text-gray-600 text-sm">
                             {{ $post->created_at->diffForHumans() }}
                         </span>
-                        @if($post->ownedBy(auth()->user()))
-                            <div class="">
-                                <form action="{{ @route('posts.destroy', $post) }}" method="post">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="text-blue-500">Delete</button>
-                                </form>
-                            </div>
-                        @endif
+
+                        @can('delete', $post)
+                            <form action="{{ @route('posts.destroy', $post) }}" method="post">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="text-blue-500">Delete</button>
+                            </form>
+                        @endcan
 
                         <p>{{ $post->body }}</p>
 
