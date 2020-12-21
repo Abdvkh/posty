@@ -2,7 +2,7 @@
 
 <div>
     <div class="mb-4">
-        <a href="{{ route('users.posts', auth()->user()) }}" class="font-bold">{{ $post->user->name }}</a>
+        <a href="{{ route('users.posts', $post->user) }}" class="font-bold">{{ $post->user->name }}</a>
 
         <span class="text-gray-600 text-sm">
                             {{ $post->created_at->diffForHumans() }}
